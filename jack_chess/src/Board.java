@@ -4,7 +4,6 @@ import java.awt.Point;
 public class Board {
     ChessPiece[][] pieces = new ChessPiece[8][8];
     HashMap<String, Character> pieceSymbol = new HashMap<>();
-    HashMap<Character, Integer> coordinateLetters = new HashMap<>();
     //white = true, black = false
     boolean turnColor = true;
 
@@ -17,16 +16,6 @@ public class Board {
         pieceSymbol.put("Queen", 'Q');
         pieceSymbol.put("King", 'K');
         pieceSymbol.put("Pawn", 'P');
-
-        //setup coordinate letter to int conversion
-        coordinateLetters.put('a', 0);
-        coordinateLetters.put('b', 1);
-        coordinateLetters.put('c', 2);
-        coordinateLetters.put('d', 3);
-        coordinateLetters.put('e', 4);
-        coordinateLetters.put('f', 5);
-        coordinateLetters.put('g', 6);
-        coordinateLetters.put('h', 7);
 
         Rook testPiece = new Rook(true,0,0);
         //initialize white pieces
@@ -71,31 +60,22 @@ public class Board {
     }
     public boolean movePiece(ChessCoordinate source, ChessCoordinate destination)
     {
-        int destinationXCoord;
-        int sourceXCoord;
-        if(coordinateLetters.get(Character.toLowerCase(destination.getX())) == null || coordinateLetters.get(Character.toLowerCase(source.getX())) == null)
-        {
-            System.out.println("invalid x coordinate");
-            return false;
-        }
-        sourceXCoord = coordinateLetters.get(Character.toLowerCase(source.getX()));
-        destinationXCoord = coordinateLetters.get(Character.toLowerCase(destination.getX()));
+       //TODO MAKE SURE COORDINATES ARE VALID
 
-
-        ChessPiece sourcePiece = this.pieces[sourceXCoord][source.getY()-1];
+        ChessPiece sourcePiece = this.pieces[source.getRawX()][source.getRawY()];
         //System.out.println("source piece name: " + sourcePiece.getColorString());
         //System.out.println("source piece location: (" + sourcePiece.getX()+", " + sourcePiece.getY() + ")");
         //System.out.println("Destination location: (" + destination.getX()+", " + (destination.getY()-1) + ")");
         //if piece at source is of proper
         if(sourcePiece.getColor() == this.turnColor)
         {
-            if(sourcePiece.move(destinationXCoord, destination.getY()-1))
+            if(sourcePiece.move(destination.getRawX(), destination.getRawY()))
             {
                 //piece was moved
                 //set old spot to null
-                this.pieces[sourceXCoord][source.getY()-1] = null;
+                this.pieces[source.getRawX()][source.getRawY()] = null;
                 //set new spot to the piece
-                this.pieces[destinationXCoord][destination.getY()-1] = sourcePiece;
+                this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
 
                 this.turnColor = !this.turnColor;
             }

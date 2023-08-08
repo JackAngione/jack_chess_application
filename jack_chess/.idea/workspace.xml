@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f1793cd-a7ef-4c04-a542-cf094020a973" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ChessCoordinate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/piecemovementalgorithm.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/movementTracking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPiece.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChessCoordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessCoordinate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,9 +53,21 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.main">
     <configuration name="main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main" />
+      <module name="jack_chess" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="movementTracking" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="movementTracking" />
       <module name="jack_chess" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -63,6 +76,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.main" />
+        <item itemvalue="Application.movementTracking" />
       </list>
     </recent_temporary>
   </component>
@@ -77,7 +91,7 @@
       <workItem from="1691218741034" duration="2182000" />
       <workItem from="1691264136295" duration="9136000" />
       <workItem from="1691352974106" duration="6910000" />
-      <workItem from="1691443884583" duration="10526000" />
+      <workItem from="1691443884583" duration="16577000" />
     </task>
     <servers />
   </component>

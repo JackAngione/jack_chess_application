@@ -5,6 +5,7 @@ public class main {
         Board board = new Board();
         board.printBoard();
         board.movePiece(new ChessCoordinate('G',1), new ChessCoordinate('F',3));
+
     }
 
 
