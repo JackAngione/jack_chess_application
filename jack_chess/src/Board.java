@@ -3,6 +3,9 @@ import java.util.HashMap;
 import java.awt.Point;
 public class Board {
     ChessPiece[][] pieces = new ChessPiece[8][8];
+
+    //move status codes
+    final int INVALID_MOVE = 0;
     HashMap<String, Character> pieceSymbol = new HashMap<>();
     //white = true, black = false
     boolean turnColor = true;
@@ -58,35 +61,36 @@ public class Board {
         pieces[7][6]= new Pawn(false,7,6);
         System.out.println(testPiece.getName());
     }
-    public boolean movePiece(ChessCoordinate source, ChessCoordinate destination)
+    public void movePiece(ChessCoordinate source, ChessCoordinate destination)
     {
        //TODO MAKE SURE COORDINATES ARE VALID
 
         ChessPiece sourcePiece = this.pieces[source.getRawX()][source.getRawY()];
-        //System.out.println("source piece name: " + sourcePiece.getColorString());
-        //System.out.println("source piece location: (" + sourcePiece.getX()+", " + sourcePiece.getY() + ")");
-        //System.out.println("Destination location: (" + destination.getX()+", " + (destination.getY()-1) + ")");
-        //if piece at source is of proper
+        System.out.println("source piece name: " + sourcePiece.getColorString());
+        System.out.println("source piece location: (" + source.getX()+", " + source.getY() + ")");
+        System.out.println("Destination location: (" + destination.getX()+", " + (destination.getY()) + ")");
+        //quit if attempting to capture enemy piece
+
+        //if piece at source is of proper color
         if(sourcePiece.getColor() == this.turnColor)
         {
-            if(sourcePiece.move(destination.getRawX(), destination.getRawY()))
+
+            //check if move is valid
+            if(sourcePiece.move(this.pieces, destination) != move_status.INVALID)
             {
                 //piece was moved
-                //set old spot to null
-                this.pieces[source.getRawX()][source.getRawY()] = null;
-                //set new spot to the piece
-                this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
-
+                process_Move_Capture(sourcePiece, source, destination);
                 this.turnColor = !this.turnColor;
             }
-            this.printBoard();
-            return true;
+            else {
+                this.printBoard();
+                System.out.println("piece move was invalid, try again");
+            }
         }
         else {
             //wrong color
             this.printBoard();
-            System.out.print("cannot move a piece of opposite color");
-            return false;
+            System.out.println("cannot move a piece of opposite color");
         }
     }
     public void printBoard()
@@ -108,4 +112,38 @@ public class Board {
             System.out.println();
         }
     }
+    public void process_Move_Capture( ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination)
+    {
+        //if there is an enemy piece on the destination, remove it
+        try
+        {
+            if(pieces[destination.getRawX()][destination.getRawY()].getColor() != this.turnColor)
+            {
+                //capture has taken place
+                //TODO ADD POINTS FEATURE WHEN CAPTURED
+                //move like normal
+                //set old spot to null
+                this.pieces[source.getRawX()][source.getRawY()] = null;
+                //set new spot to the piece
+                this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
+                //swap turn color
+
+                System.out.println("enemy piece captured");
+            }
+        }
+        catch(NullPointerException e)
+        {
+            System.out.println("no piece to capture");
+        }
+
+        //move like normal
+        //set old spot to null
+        this.pieces[source.getRawX()][source.getRawY()] = null;
+        //set new spot to the piece
+        this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
+        //swap turn color
+        System.out.println("piece successfully moved");
+        this.printBoard();
+    }
+
 }

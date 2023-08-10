@@ -10,7 +10,17 @@ public abstract class ChessPiece {
         this.setX(x);
         this.setY(y);
     }
-    public abstract boolean move(int x, int y);
+    public move_status move(ChessPiece[][] board, ChessCoordinate destination){
+        move_status returnValue = isValidMove(board, destination);
+        if(returnValue == move_status.INVALID)
+        {
+            return move_status.INVALID;
+
+        }
+        this.setX(destination.getRawX());
+        this.setY(destination.getRawY());
+        return move_status.MOVE;
+    };
     public String getName()
     {
         return this.name;
@@ -47,7 +57,9 @@ public abstract class ChessPiece {
         return this.pos_y;
     }
 
-    public abstract boolean isValidMove(int x, int y);
+    abstract move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination);
+
+    abstract move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination);
     //TODO possibly make a getter for position
 }
 
@@ -62,30 +74,38 @@ class King extends ChessPiece
         this.name = "King";
     }
     @Override
-    public boolean move(int x, int y) {
-        if(isValidMove(x,y))
+    public move_status move(ChessPiece[][] board, ChessCoordinate destination) {
+        move_status returnValue = isValidMove(board, destination);
+        if(returnValue == move_status.INVALID)
         {
-            this.setX(x);
-            this.setY(y);
-            return true;
+            return move_status.INVALID;
+
         }
-        return false;
+        this.setX(destination.getRawX());
+        this.setY(destination.getRawY());
+        return move_status.MOVE;
     }
 
     //takes in where the piece wants to move
     @Override
-    public boolean isValidMove(int x, int y) {
+    public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
         //the x move is within one space
-        if(this.getX()-1==x || this.getX()+1 ==x)
+        if(this.getX()-1==destination.getRawX() || this.getX()+1 == destination.getRawX())
         {
-            if(this.getY()-1 == y || this.getY()+1 == y)
+            if(this.getY()-1 == destination.getRawY() || this.getY()+1 == destination.getRawY())
             {
                 //valid x and y move
-                return true;
+                return collisionTracking(board, destination);
             }
         }
-        return false;
+        return move_status.INVALID;
     }
+
+    @Override
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+        return move_status.MOVE;
+    }
+
 }
 
 class Queen extends ChessPiece
@@ -100,33 +120,30 @@ class Queen extends ChessPiece
 
 
     }
-    @Override
-    public boolean move(int x, int y) {
-        if(isValidMove(x,y))
-        {
-            //set new position
-            this.setX(x);
-            this.setY(y);
-            return true;
-        }
-        return false;
-    }
 
     //takes in where the piece wants to move
     @Override
-    public boolean isValidMove(int x, int y) {
-        if(x == this.getX() || y== this.getY())
+    public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
+        if(destination.getRawX() == this.getX() || destination.getRawY() == this.getY())
         {
             //then movement is on axis, like a rook
-            return true;
+            return collisionTracking(board, destination);
         }
 
         // Calculate the absolute differences in x and y coordinates
-        int dx = Math.abs(x - this.getX());
-        int dy = Math.abs(y - this.getY());
+        int dx = Math.abs(destination.getRawX() - this.getX());
+        int dy = Math.abs(destination.getRawY() - this.getY());
 
         // Check if the move is diagonal
-        return dx == dy;
+        if(dx == dy) {
+            return collisionTracking(board, destination);
+        }
+        return move_status.INVALID;
+    }
+
+    @Override
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+        return move_status.MOVE;
     }
 }
 
@@ -141,27 +158,22 @@ class Rook extends ChessPiece
         super(color, x, y);
         this.name = "Rook";
     }
-    @Override
-    public boolean move(int x, int y) {
-        if(isValidMove(x,y))
-        {
-            this.setX(x);
-            this.setY(y);
-            return true;
-        }
-        return false;
-    }
 
     //takes in where the piece wants to move
     @Override
-    public boolean isValidMove(int x, int y) {
+    public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
 
-        if(x == this.getX() || y == this.getY())
+        if(destination.getRawX() == this.getX() || destination.getRawY() == this.getY())
         {
             //then movement is on axis
-            return true;
+            return move_status.MOVE;
         }
-        return false;
+        return move_status.INVALID;
+    }
+
+    @Override
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+        return move_status.MOVE;
     }
 }
 class Bishop extends ChessPiece
@@ -174,59 +186,105 @@ class Bishop extends ChessPiece
         super(color, x, y);
         this.name = "Bishop";
     }
-    @Override
-    public boolean move(int x, int y) {
-        if(isValidMove(x,y))
-        {
-            this.setX(x);
-            this.setY(y);
-            return true;
-        }
-        return false;
-    }
 
     //takes in where the piece wants to move
     @Override
-    public boolean isValidMove(int x, int y) {
+    public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
 
         // Calculate the absolute differences in x and y coordinates
-        int dx = Math.abs(x - this.getX());
-        int dy = Math.abs(y - this.getY());
+        int dx = Math.abs(destination.getRawX() - this.getX());
+        int dy = Math.abs(destination.getRawY() - this.getY());
+        try{
+            if(board[destination.getRawX()][destination.getRawY()].getColor() == this.getColor())
+            {
+                //trying to capture a piece of the same color :/
+                return move_status.INVALID;
+            }
+        }
+        catch(NullPointerException ignored)
+        {
 
-        // Check if the move is diagonal
-        return dx == dy;
+        }
+        // Check if the move is diagonal/ valid in the first place, then check for collision results
+        if( dx == dy)
+        {
+            //TODO IMPLEMENT
+            return collisionTracking(board, destination);
+        }
+
+        return move_status.INVALID;
+    }
+    @Override
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination)
+    {
+        //int yStart= Math.source.getRawY();
+        //moving left to right
+        int xCursor = this.getX();
+        int yCursor = this.getY();
+
+        while(xCursor != destination.getRawX() && yCursor!= destination.getRawY())
+        {
+            System.out.println("Cursor: (" + xCursor + ", " + yCursor + ")");
+            //check for colliosion
+            if(board[xCursor][yCursor] != null && (xCursor != this.getX() && yCursor != this.getY()))
+            {
+                
+                System.out.println("there is a piece in-between source and destination!");
+                return move_status.INVALID;
+            }
+
+            //MOVE X CURSOR
+            if(destination.getRawX()< this.getX())
+            {
+                //move x to the left
+                xCursor--;
+            }
+            else
+            {
+                //move x to the right
+                xCursor++;
+            }
+            //MOVE Y CURSOR
+            if(destination.getRawY() > this.getY())
+            {
+                //move y up
+                yCursor++;
+            }
+            else
+            {
+                //move y down
+                yCursor--;
+            }
+        }
+        return move_status.MOVE;
     }
 }
 
 class Knight extends ChessPiece
 {
-    boolean color;
-    int pos_x;
-    int pos_y;
     public Knight(boolean color, int x, int y)
     {
         super(color, x, y);
         this.name = "Knight";
     }
-    @Override
-    public boolean move(int x, int y) {
-        if(isValidMove(x,y))
-        {
-            this.setX(x);
-            this.setY(y);
-            return true;
-        }
-        return false;
-    }
 
     //takes in where the piece wants to move
     @Override
-    public boolean isValidMove(int x, int y) {
+    public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
         // Calculate the absolute differences in x and y coordinates
-        int dx = Math.abs(x - this.getX());
-        int dy = Math.abs(y - this.getY());
+        int dx = Math.abs(destination.getRawX() - this.getX());
+        int dy = Math.abs(destination.getRawY() - this.getY());
         // Check if it's a valid knight move
-        return (dx == 1 && dy == 2) || (dx == 2 && dy == 1);
+        if((dx == 1 && dy == 2) || (dx == 2 && dy == 1))
+        {
+            return collisionTracking(board, destination);
+        }
+        return move_status.INVALID;
+    }
+
+    @Override
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+        return move_status.MOVE;
     }
 }
 class Pawn extends ChessPiece
@@ -236,43 +294,81 @@ class Pawn extends ChessPiece
         super(color, x, y);
         this.name = "Pawn";
     }
-    @Override
-    public boolean move(int x, int y) {
-        if(isValidMove(x,y))
-        {
-            this.setX(x);
-            this.setY(y);
-            return true;
-        }
-        return false;
-    }
+
 
     //takes in where the piece wants to move
     @Override
-    public boolean isValidMove(int x, int y) {
+    public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
         //white
         if(this.getColor())
         {
-            if(this.getY()==1 && y-this.getY() == 2)
+            //pawn first move, going two spaces
+            if(destination.getRawX()== this.getX() && this.getY() == 1 && destination.getRawY()-this.getY() == 2)
             {
-                System.out.println("position: " + this.getX() + this.getY());
-                System.out.println("moving to " + x + ", " + y);
-                //pawn first move, can go two spaces
-                return x == this.getX() && y == (this.getY() + 2);
+                return collisionTracking(board, destination);
             }
-            //return true if pawn is moving forward 1
-            return x == this.getX() && y == (this.getY() + 1);
-        }
+            //pawn is moving forward 1
+            else if(destination.getRawX() == this.getX() && destination.getRawY() == (this.getY() + 1))
+            {
 
+               return collisionTracking(board, destination);
+            }
+            //piece is trying to capture
+            else if (Math.abs(destination.getRawX()-this.getX()) ==1 && destination.getRawY() == (this.getY()+1))
+            {
+                return captureCollisionTracking(board, destination);
+            }
+            System.out.println("failing pawn check??");
+        }
         //black
-        if(this.getY() == 1)
+        if(destination.getRawX()== this.getX() && this.getY() == 6 && destination.getRawY()-this.getY() == -2)
         {
-            //pawn first move, can go two spaces
-            return x == this.getX() && y == this.getY() - 2;
+            System.out.println("position: " + this.getX() + this.getY());
+            System.out.println("moving to " + destination.getRawX() + ", " + destination.getRawY());
+            //pawn first move, going two spaces
+            return collisionTracking(board, destination);
         }
-        //return if black moving forward one space
-        else return x == this.getX() && y == this.getY() - 1;
 
+        else if(destination.getRawX() == this.getX() && destination.getRawY() == (this.getY() - 1))
+        {
+            //pawn is moving forward 1
+            return collisionTracking(board, destination);
+        }
+        //piece is trying to capture
+        else if (Math.abs(destination.getRawX()-this.getX()) == 1 && destination.getRawY() == (this.getY() - 1))
+        {
+            return captureCollisionTracking(board, destination);
+        }
+        System.out.println("failing pawn check??");
+        return move_status.INVALID;
         //TODO add diagonal take move for pawn
+    }
+    //special pawn method, since
+    move_status captureCollisionTracking(ChessPiece[][] board, ChessCoordinate destination)
+    {
+        //make sure pawn special capture is valid
+        try
+        {
+            if(board[destination.getRawX()][destination.getRawY()].getColor() != this.getColor())
+            {
+                return move_status.MOVE;
+            }
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("pawn can only move diagonal to capture a piece!");
+            return move_status.INVALID;
+        }
+        System.out.println("cannot capture same color piece!");
+        return move_status.INVALID;
+    }
+    @Override
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+        //pawn collision check only needs to know if there is a piece infront of it
+        if(board[destination.getRawX()][destination.getRawY()] == null)
+        {
+            return move_status.MOVE;
+        }
+        return move_status.INVALID;
     }
 }
