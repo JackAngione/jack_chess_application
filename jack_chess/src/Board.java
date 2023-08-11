@@ -76,7 +76,7 @@ public class Board {
         {
 
             //check if move is valid
-            if(sourcePiece.move(this.pieces, destination) != move_status.INVALID)
+            if(sourcePiece.move(this.pieces, destination) == move_status.MOVE)
             {
                 //piece was moved
                 process_Move_Capture(sourcePiece, source, destination);

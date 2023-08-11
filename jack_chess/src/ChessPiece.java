@@ -65,9 +65,6 @@ public abstract class ChessPiece {
 
 class King extends ChessPiece
 {
-    boolean color;
-    int pos_x;
-    int pos_y;
     public King(boolean color, int x, int y)
     {
         super(color, x, y);
@@ -110,9 +107,6 @@ class King extends ChessPiece
 
 class Queen extends ChessPiece
 {
-    boolean color;
-    int pos_x;
-    int pos_y;
     public Queen(boolean color, int x, int y)
     {
         super(color, x, y);
@@ -150,9 +144,6 @@ class Queen extends ChessPiece
 
 class Rook extends ChessPiece
 {
-    boolean color;
-    int pos_x;
-    int pos_y;
     public Rook(boolean color, int x, int y)
     {
         super(color, x, y);
@@ -166,21 +157,58 @@ class Rook extends ChessPiece
         if(destination.getRawX() == this.getX() || destination.getRawY() == this.getY())
         {
             //then movement is on axis
-            return move_status.MOVE;
+            return collisionTracking(board, destination);
         }
         return move_status.INVALID;
     }
 
     @Override
     move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+        int xCursor = Math.min(destination.getRawX(), this.getX());
+        int yCursor = Math.min(destination.getRawY(), this.getY());
+        int newDestX = Math.max(destination.getRawX(), this.getX());
+        int newDestY = Math.max(destination.getRawY(), this.getY());
+        System.out.println("xcursor: " + xCursor + ", " + "yCursor: "
+                + yCursor + " newdestX: " + newDestX +  " newdesty: " + newDestY);
+        while(xCursor != destination.getRawX() || yCursor != destination.getRawY())
+        {
+            //move along y-axis
+            if(this.getX() == destination.getRawX())
+            {
+                if(yCursor<destination.getRawY())
+                {
+                    //move ycursor up
+                    yCursor += 1;
+                }
+                else
+                {
+                    //move ycursor down
+                    yCursor -= 1;
+                }
+            }
+            //move along x-axis
+            else if(this.getY() == destination.getRawY())
+            {
+                if(xCursor<destination.getRawX())
+                {
+                    xCursor += 1;
+                }
+                else
+                {
+                    xCursor -= 1;
+                }
+            }
+            if(board[xCursor][yCursor] != null)
+            {
+                System.out.println("there is a piece in the way");
+                return move_status.INVALID;
+            }
+        }
         return move_status.MOVE;
     }
 }
 class Bishop extends ChessPiece
 {
-    boolean color;
-    int pos_x;
-    int pos_y;
     public Bishop(boolean color, int x, int y)
     {
         super(color, x, y);

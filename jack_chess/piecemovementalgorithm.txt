@@ -2,3 +2,8 @@ when moving a piece, it's path must be tracked to detect if there are any pieces
 fail move if there is a piece in the path
 
 if there is a piece on the destination, a piece is captured
+
+
+COMPLETED TRACKING:
+    BISHOP
+    PAWN

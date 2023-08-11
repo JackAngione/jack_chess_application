@@ -5,10 +5,18 @@ public class main {
         board.printBoard();
         //TEST GAMES
 
-       /* //white pawn capture black pawn
+        //ROOK TRACKING
+        board.movePiece(new ChessCoordinate('A',2), new ChessCoordinate('A',4));
+
+        board.movePiece(new ChessCoordinate('D',7), new ChessCoordinate('D',5));
+
+        board.movePiece(new ChessCoordinate('A',1), new ChessCoordinate('A',3));
+        
+        /* //white pawn capture black pawn
         board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',4));
         board.movePiece(new ChessCoordinate('C',7), new ChessCoordinate('C',5));
-        board.movePiece(new ChessCoordinate('D', 4), new ChessCoordinate('C', 5));*/
+        board.movePiece(new ChessCoordinate('D', 4), new ChessCoordinate('C', 5));
+        */
         /*
         board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',4));
 
