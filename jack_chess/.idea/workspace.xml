@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="5f1793cd-a7ef-4c04-a542-cf094020a973" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Bishop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Bishop.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/King.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/King.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Knight.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Knight.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Pawn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Pawn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Queen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Queen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Rook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Rook.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/piecemovementalgorithm.txt" beforeDir="false" afterPath="$PROJECT_DIR$/piecemovementalgorithm.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
@@ -106,6 +110,9 @@
       <workItem from="1691522371579" duration="11487000" />
       <workItem from="1691620956053" duration="9005000" />
       <workItem from="1691706556756" duration="3639000" />
+      <workItem from="1691740024060" duration="1965000" />
+      <workItem from="1691791788421" duration="2292000" />
+      <workItem from="1692252052963" duration="1415000" />
     </task>
     <servers />
   </component>

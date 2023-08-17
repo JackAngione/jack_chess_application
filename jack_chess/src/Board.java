@@ -74,13 +74,13 @@ public class Board {
         //if piece at source is of proper color
         if(sourcePiece.getColor() == this.turnColor)
         {
-
             //check if move is valid
             if(sourcePiece.move(this.pieces, destination) == move_status.MOVE)
             {
                 //piece was moved
                 process_Move_Capture(sourcePiece, source, destination);
                 this.turnColor = !this.turnColor;
+                this.printBoard();
             }
             else {
                 this.printBoard();
@@ -95,7 +95,6 @@ public class Board {
     }
     public void printBoard()
     {
-
         for(int j = 7; j>=0; j--)
         {
             for(int i = 0; i<= 7; i++)
@@ -107,7 +106,6 @@ public class Board {
                 else {
                    System.out.print(pieceSymbol.get(this.pieces[i][j].getName()) + " ");
                 }
-
             }
             System.out.println();
         }
@@ -117,33 +115,34 @@ public class Board {
         //if there is an enemy piece on the destination, remove it
         try
         {
-            if(pieces[destination.getRawX()][destination.getRawY()].getColor() != this.turnColor)
+            if(pieces[destination.getRawX()][destination.getRawY()].getColor() == this.turnColor)
             {
-                //capture has taken place
-                //TODO ADD POINTS FEATURE WHEN CAPTURED
+                System.out.println("can't capture piece of same color");
+            }
+            else
+            {
                 //move like normal
                 //set old spot to null
                 this.pieces[source.getRawX()][source.getRawY()] = null;
                 //set new spot to the piece
                 this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
                 //swap turn color
-
-                System.out.println("enemy piece captured");
+                System.out.println("piece successfully moved");
             }
         }
         catch(NullPointerException e)
         {
-            System.out.println("no piece to capture");
+
+            //capture has taken place
+            //TODO ADD POINTS FEATURE WHEN CAPTURED
+            //move like normal
+            //set old spot to null
+            this.pieces[source.getRawX()][source.getRawY()] = null;
+            //set new spot to the piece
+            this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
+            //swap turn color
+            System.out.println("enemy piece captured");
         }
 
-        //move like normal
-        //set old spot to null
-        this.pieces[source.getRawX()][source.getRawY()] = null;
-        //set new spot to the piece
-        this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
-        //swap turn color
-        System.out.println("piece successfully moved");
-        this.printBoard();
     }
-
 }

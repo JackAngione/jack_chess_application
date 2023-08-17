@@ -87,19 +87,16 @@ class King extends ChessPiece
     @Override
     public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
         //the x move is within one space
-        if(this.getX()-1==destination.getRawX() || this.getX()+1 == destination.getRawX())
+        if(Math.abs(this.getX()-destination.getRawX()) <= 1
+                && Math.abs(this.getY()-destination.getRawY()) <= 1)
         {
-            if(this.getY()-1 == destination.getRawY() || this.getY()+1 == destination.getRawY())
-            {
-                //valid x and y move
-                return collisionTracking(board, destination);
-            }
+            return move_status.MOVE;
         }
         return move_status.INVALID;
     }
-
     @Override
     move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+
         return move_status.MOVE;
     }
 
@@ -111,8 +108,6 @@ class Queen extends ChessPiece
     {
         super(color, x, y);
         this.name = "Queen";
-
-
     }
 
     //takes in where the piece wants to move
@@ -121,7 +116,7 @@ class Queen extends ChessPiece
         if(destination.getRawX() == this.getX() || destination.getRawY() == this.getY())
         {
             //then movement is on axis, like a rook
-            return collisionTracking(board, destination);
+            return rookStyleCollisionTracking(board, destination);
         }
 
         // Calculate the absolute differences in x and y coordinates
@@ -134,9 +129,95 @@ class Queen extends ChessPiece
         }
         return move_status.INVALID;
     }
+    //collision tracking when queen is moving in rook style
+    move_status rookStyleCollisionTracking(ChessPiece[][] board, ChessCoordinate destination)
+    {
+        System.out.println("queeen rook type tracking");
+        int xCursor = Math.min(destination.getRawX(), this.getX());
+        int yCursor = Math.min(destination.getRawY(), this.getY());
 
+        while(xCursor != Math.max(destination.getRawX(), this.getX()) || yCursor != Math.max(destination.getRawY(), this.getY()))
+        {
+            if(board[xCursor][yCursor] != null
+            && (xCursor != Math.min(destination.getRawX(), this.getX()) || yCursor != Math.min(destination.getRawY(), this.getY())))
+            {
+                System.out.println("piece is at: " + xCursor + ", " + yCursor);
+                System.out.println("there is a piece in the way");
+                return move_status.INVALID;
+            }
+            //move along y-axis
+            if(this.getX() == destination.getRawX())
+            {
+                if(yCursor<destination.getRawY())
+                {
+                    //move ycursor up
+                    yCursor += 1;
+                }
+                else
+                {
+                    //move ycursor down
+                    yCursor -= 1;
+                }
+            }
+            //move along x-axis
+            else if(this.getY() == destination.getRawY())
+            {
+                if(xCursor<destination.getRawX())
+                {
+                    xCursor += 1;
+                }
+                else
+                {
+                    xCursor -= 1;
+                }
+            }
+
+        }
+        return move_status.MOVE;
+    }
+    //collision tracking when queen is moving in bishop style
     @Override
-    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination)
+    {
+        //int yStart= Math.source.getRawY();
+        //moving left to right
+        int xCursor = this.getX();
+        int yCursor = this.getY();
+
+        while(xCursor != destination.getRawX() && yCursor!= destination.getRawY())
+        {
+            System.out.println("Cursor: (" + xCursor + ", " + yCursor + ")");
+            //check for colliosion
+            if(board[xCursor][yCursor] != null && (xCursor != this.getX() && yCursor != this.getY()))
+            {
+
+                System.out.println("there is a piece in-between source and destination!");
+                return move_status.INVALID;
+            }
+
+            //MOVE X CURSOR
+            if(destination.getRawX()< this.getX())
+            {
+                //move x to the left
+                xCursor--;
+            }
+            else
+            {
+                //move x to the right
+                xCursor++;
+            }
+            //MOVE Y CURSOR
+            if(destination.getRawY() > this.getY())
+            {
+                //move y up
+                yCursor++;
+            }
+            else
+            {
+                //move y down
+                yCursor--;
+            }
+        }
         return move_status.MOVE;
     }
 }
@@ -166,12 +247,16 @@ class Rook extends ChessPiece
     move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
         int xCursor = Math.min(destination.getRawX(), this.getX());
         int yCursor = Math.min(destination.getRawY(), this.getY());
-        int newDestX = Math.max(destination.getRawX(), this.getX());
-        int newDestY = Math.max(destination.getRawY(), this.getY());
-        System.out.println("xcursor: " + xCursor + ", " + "yCursor: "
-                + yCursor + " newdestX: " + newDestX +  " newdesty: " + newDestY);
-        while(xCursor != destination.getRawX() || yCursor != destination.getRawY())
+
+        while(xCursor != Math.max(destination.getRawX(), this.getX()) || yCursor != Math.max(destination.getRawY(), this.getY()))
         {
+            if(board[xCursor][yCursor] != null
+                    && (xCursor != Math.min(destination.getRawX(), this.getX()) || yCursor != Math.min(destination.getRawY(), this.getY())))
+            {
+                System.out.println("piece is at: " + xCursor + ", " + yCursor);
+                System.out.println("there is a piece in the way");
+                return move_status.INVALID;
+            }
             //move along y-axis
             if(this.getX() == destination.getRawX())
             {
@@ -197,11 +282,6 @@ class Rook extends ChessPiece
                 {
                     xCursor -= 1;
                 }
-            }
-            if(board[xCursor][yCursor] != null)
-            {
-                System.out.println("there is a piece in the way");
-                return move_status.INVALID;
             }
         }
         return move_status.MOVE;
@@ -322,8 +402,6 @@ class Pawn extends ChessPiece
         super(color, x, y);
         this.name = "Pawn";
     }
-
-
     //takes in where the piece wants to move
     @Override
     public move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination) {
