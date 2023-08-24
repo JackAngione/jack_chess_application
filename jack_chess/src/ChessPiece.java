@@ -302,17 +302,7 @@ class Bishop extends ChessPiece
         // Calculate the absolute differences in x and y coordinates
         int dx = Math.abs(destination.getRawX() - this.getX());
         int dy = Math.abs(destination.getRawY() - this.getY());
-        try{
-            if(board[destination.getRawX()][destination.getRawY()].getColor() == this.getColor())
-            {
-                //trying to capture a piece of the same color :/
-                return move_status.INVALID;
-            }
-        }
-        catch(NullPointerException ignored)
-        {
 
-        }
         // Check if the move is diagonal/ valid in the first place, then check for collision results
         if( dx == dy)
         {

@@ -5,6 +5,18 @@ public class main {
         board.printBoard();
         //TEST GAMES
 
+        //BISHOP TRACKING
+        board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',4));
+
+        board.movePiece(new ChessCoordinate('E',7), new ChessCoordinate('E',5));
+
+        board.movePiece(new ChessCoordinate('C',1), new ChessCoordinate('F',4));
+
+        board.movePiece(new ChessCoordinate('D',8), new ChessCoordinate('F',6));
+
+        board.movePiece(new ChessCoordinate('F',4), new ChessCoordinate('E',5));
+
+        /*
         //QUEEN and KING tracking
         board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',4));
 
@@ -23,6 +35,7 @@ public class main {
         board.movePiece(new ChessCoordinate('F',6), new ChessCoordinate('F',7));
 
         board.movePiece(new ChessCoordinate('E',5), new ChessCoordinate('C',7));
+        */
 
         //TODO test rook capturing enemy piece
 

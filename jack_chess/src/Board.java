@@ -59,7 +59,6 @@ public class Board {
         pieces[5][6]= new Pawn(false,5,6);
         pieces[6][6]= new Pawn(false,6,6);
         pieces[7][6]= new Pawn(false,7,6);
-        System.out.println(testPiece.getName());
     }
     public void movePiece(ChessCoordinate source, ChessCoordinate destination)
     {
@@ -95,22 +94,36 @@ public class Board {
     }
     public void printBoard()
     {
+        HashMap<Integer, Character> axisLetters = new HashMap<>();
+        axisLetters.put(7, 'A');
+        axisLetters.put(6, 'B');
+        axisLetters.put(5, 'C');
+        axisLetters.put(4, 'D');
+        axisLetters.put(3, 'E');
+        axisLetters.put(2, 'F');
+        axisLetters.put(1, 'G');
+        axisLetters.put(0, 'H');
         for(int j = 7; j>=0; j--)
         {
+            System.out.println("     ----- ----- ----- ----- ----- ----- ----- -----");
+            System.out.print((j+1) + "   |  ");
             for(int i = 0; i<= 7; i++)
             {
                 if(this.pieces[i][j] == null)
                 {
-                    System.out.print("  ");
+                    System.out.print("   |  ");
                 }
                 else {
-                   System.out.print(pieceSymbol.get(this.pieces[i][j].getName()) + " ");
+                   System.out.print(pieceSymbol.get(this.pieces[i][j].getName()) + "  |  ");
                 }
             }
             System.out.println();
         }
+        System.out.println("     ----- ----- ----- ----- ----- ----- ----- -----");
+        System.out.println("       A     B     C     D     E     F     G     H");
     }
-    public void process_Move_Capture( ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination)
+
+    public void process_Move_Capture(ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination)
     {
         //if there is an enemy piece on the destination, remove it
         try
@@ -143,6 +156,42 @@ public class Board {
             //swap turn color
             System.out.println("enemy piece captured");
         }
+    }
+    public void getKingCoord(boolean color) throws Exception {
+        ChessPiece king;
+        ChessCoordinate kingPosition;
+        //loop through all spots on the board
+        //find both side's kings
+        for(int i = 0; i<=7; i++)
+        {
+            for(int j = 0; j<=7; j++)
+            {
+                if(this.pieces[i][j].getName().equals("King") && color == this.pieces[i][j].getColor())
+                {
+                    king = this.pieces[i][j];
+                    kingPosition = new ChessCoordinate(i, j);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void checkTest(ChessCoordinate kingCoords) {
+        //RUN ON EVERY TURN
+        //function takes in the coordinates of the king
+        //check the diagonals, and straights along the king
+        //if there is a piece... in say, the diagonal path,
+        //check if it is a piece that can capture diagonally (queen/bishop/pawn)
+
+
+        //check diagonals
+        //check in "star" pattern around the king
+        boolean good = true;
+        while(good)
+        {
+
+        }
 
     }
+
 }

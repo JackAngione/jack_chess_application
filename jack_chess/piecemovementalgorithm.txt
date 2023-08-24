@@ -3,9 +3,3 @@ fail move if there is a piece in the path
 
 if there is a piece on the destination, a piece is captured
 
-
-COMPLETED TRACKING:
-    BISHOP
-    PAWN
-    ROOK
-    QUEEN?

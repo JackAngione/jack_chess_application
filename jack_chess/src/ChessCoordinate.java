@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChessCoordinate {
         private final char x;
@@ -17,6 +18,36 @@ public class ChessCoordinate {
             coordinateLetters.put('f', 5);
             coordinateLetters.put('g', 6);
             coordinateLetters.put('h', 7);
+        }
+        public ChessCoordinate(int x, int y) throws Exception {
+            char x1;
+            coordinateLetters.put('a', 0);
+            coordinateLetters.put('b', 1);
+            coordinateLetters.put('c', 2);
+            coordinateLetters.put('d', 3);
+            coordinateLetters.put('e', 4);
+            coordinateLetters.put('f', 5);
+            coordinateLetters.put('g', 6);
+            coordinateLetters.put('h', 7);
+            //set x1 to 'A' as a backup
+            x1 = 'Z';
+            //loop through hashmap and assign x to the letter which has it's numeric value
+            for (Map.Entry<Character, Integer> entry : coordinateLetters.entrySet()) {
+                Character key = entry.getKey();
+                Integer value = entry.getValue();
+                System.out.println("Key: " + key + ", Value: " + value);
+                if(value == x)
+                {
+                    x1 = key;
+                    break;
+                }
+            }
+            if(x1 == 'Z')
+            {
+             throw new Exception("Incorrect X coordinate given to ChessCoordinate object");
+            }
+            this.x = x1;
+            this.y = y+1;
         }
         public char getX()
         {
