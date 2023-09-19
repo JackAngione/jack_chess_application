@@ -7,6 +7,7 @@ public class Board {
     //move status codes
     final int INVALID_MOVE = 0;
     HashMap<String, Character> pieceSymbol = new HashMap<>();
+
     //white = true, black = false
     boolean turnColor = true;
 
@@ -60,8 +61,7 @@ public class Board {
         pieces[6][6]= new Pawn(false,6,6);
         pieces[7][6]= new Pawn(false,7,6);
     }
-    public void movePiece(ChessCoordinate source, ChessCoordinate destination)
-    {
+    public void movePiece(ChessCoordinate source, ChessCoordinate destination) throws Exception {
        //TODO MAKE SURE COORDINATES ARE VALID
 
         ChessPiece sourcePiece = this.pieces[source.getRawX()][source.getRawY()];
@@ -78,6 +78,9 @@ public class Board {
             {
                 //piece was moved
                 process_Move_Capture(sourcePiece, source, destination);
+                //see if opposite color's king is in check
+                //TODO EVERY PIECE ON THE BOARD MUST RUN IT'S CHECK TEST
+                checkTest(!this.turnColor, sourcePiece);
                 this.turnColor = !this.turnColor;
                 this.printBoard();
             }
@@ -122,7 +125,16 @@ public class Board {
         System.out.println("     ----- ----- ----- ----- ----- ----- ----- -----");
         System.out.println("       A     B     C     D     E     F     G     H");
     }
-
+    public void move_Piece(ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination)
+    {
+        //move like normal
+        //set old spot to null
+        this.pieces[source.getRawX()][source.getRawY()] = null;
+        //set new spot to the piece
+        this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
+        //swap turn color
+        System.out.println("piece successfully moved");
+    }
     public void process_Move_Capture(ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination)
     {
         //if there is an enemy piece on the destination, remove it
@@ -134,64 +146,51 @@ public class Board {
             }
             else
             {
-                //move like normal
-                //set old spot to null
-                this.pieces[source.getRawX()][source.getRawY()] = null;
-                //set new spot to the piece
-                this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
-                //swap turn color
-                System.out.println("piece successfully moved");
+                move_Piece(sourcePiece, source, destination);
             }
         }
         catch(NullPointerException e)
         {
-
             //capture has taken place
             //TODO ADD POINTS FEATURE WHEN CAPTURED
-            //move like normal
-            //set old spot to null
-            this.pieces[source.getRawX()][source.getRawY()] = null;
-            //set new spot to the piece
-            this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
-            //swap turn color
-            System.out.println("enemy piece captured");
+            move_Piece(sourcePiece, source, destination);
         }
     }
-    public void getKingCoord(boolean color) throws Exception {
+
+
+
+    //KING CHECK STUFF
+    public ChessCoordinate getKingCoord(boolean color) throws Exception {
         ChessPiece king;
-        ChessCoordinate kingPosition;
+        ChessCoordinate kingPosition = null;
         //loop through all spots on the board
-        //find both side's kings
+        //find king
         for(int i = 0; i<=7; i++)
         {
             for(int j = 0; j<=7; j++)
             {
-                if(this.pieces[i][j].getName().equals("King") && color == this.pieces[i][j].getColor())
+                if(this.pieces[i][j] != null)
                 {
-                    king = this.pieces[i][j];
-                    kingPosition = new ChessCoordinate(i, j);
-                    break;
+                    if(this.pieces[i][j].getName().equals("King") && color == this.pieces[i][j].getColor())
+                    {
+                        kingPosition = new ChessCoordinate(i, j);
+                        break;
+                    }
                 }
+
             }
         }
+        return kingPosition;
     }
 
-    public void checkTest(ChessCoordinate kingCoords) {
-        //RUN ON EVERY TURN
-        //function takes in the coordinates of the king
-        //check the diagonals, and straights along the king
-        //if there is a piece... in say, the diagonal path,
-        //check if it is a piece that can capture diagonally (queen/bishop/pawn)
-
-
-        //check diagonals
-        //check in "star" pattern around the king
-        boolean good = true;
-        while(good)
+    public void checkTest(boolean kingColor, ChessPiece last_moved_piece) throws Exception {
+        ChessCoordinate kingCoordinates = getKingCoord(kingColor);
+        //TODO run the piece's check pattern to see if it puts the enemy king in check
+        Boolean inCheck = last_moved_piece.king_check(this.pieces, kingCoordinates);
+        if(inCheck)
         {
-
+            System.out.println("KING IS IN CHECK!!!!");
         }
-
     }
 
 }

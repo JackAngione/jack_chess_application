@@ -6,15 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5f1793cd-a7ef-4c04-a542-cf094020a973" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Bishop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Bishop.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/ChessCoordinate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/ChessCoordinate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Knight.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Knight.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Pawn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Pawn.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/piecemovementalgorithm.txt" beforeDir="false" afterPath="$PROJECT_DIR$/piecemovementalgorithm.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChessCoordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessCoordinate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPiece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.java" afterDir="false" />
     </list>
@@ -38,6 +30,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectId" id="2TYSu3281XtGeGmjPTwuKKK61ul" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -57,6 +52,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -117,11 +113,20 @@
       <workItem from="1692422114924" duration="597000" />
       <workItem from="1692478449002" duration="4159000" />
       <workItem from="1692566480700" duration="3491000" />
-      <workItem from="1692829191007" duration="1711000" />
+      <workItem from="1692829191007" duration="2388000" />
+      <workItem from="1693259383911" duration="260000" />
+      <workItem from="1693259652934" duration="1071000" />
+      <workItem from="1694559386017" duration="29000" />
+      <workItem from="1694730675674" duration="1355000" />
+      <workItem from="1695068760699" duration="5778000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

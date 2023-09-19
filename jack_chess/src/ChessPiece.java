@@ -59,6 +59,8 @@ public abstract class ChessPiece {
 
     abstract move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination);
 
+    //see if next move puts king in check
+    abstract boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates);
     abstract move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination);
     //TODO possibly make a getter for position
 }
@@ -94,12 +96,22 @@ class King extends ChessPiece
         }
         return move_status.INVALID;
     }
+    //if destination space is valid, king collision tracking always is valid
     @Override
     move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
 
         return move_status.MOVE;
     }
-
+    @Override
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingPosition) {
+        //if the enemy king is within one of the current piece
+        if(Math.abs(kingPosition.getRawX() - this.getX()) <= 1
+                && Math.abs(kingPosition.getRawY() - this.getY()) <= 1)
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 class Queen extends ChessPiece
@@ -129,6 +141,9 @@ class Queen extends ChessPiece
         }
         return move_status.INVALID;
     }
+
+
+
     //collision tracking when queen is moving in rook style
     move_status rookStyleCollisionTracking(ChessPiece[][] board, ChessCoordinate destination)
     {
@@ -220,6 +235,177 @@ class Queen extends ChessPiece
         }
         return move_status.MOVE;
     }
+    @Override
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+        int xCursor = this.getX()-1;
+        int yCursor = this.getY()+1;
+        ChessPiece targetPiece;
+        //check from piece to top left diagonal
+        while (xCursor>=0 && yCursor<=7)
+        {
+
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor-=1;
+            yCursor+=1;
+        }
+        //check top right diagonal
+        xCursor = this.getX()+1;
+        yCursor = this.getY()+1;
+        while (xCursor<=7 && yCursor<=7)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor+=1;
+            yCursor+=1;
+        }
+        //check bottom left diagonal
+        xCursor = this.getX()-1;
+        yCursor = this.getY()-1;
+        while (xCursor>=0 && yCursor>=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor-=1;
+            yCursor-=1;
+        }
+        //check bottom right diagonal
+        xCursor = this.getX()+1;
+        yCursor = this.getY()-1;
+        while (xCursor>=0 && yCursor>=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor+=1;
+            yCursor-=1;
+        }
+
+        //check top straight
+        xCursor = this.getX();
+        yCursor = this.getY()+1;
+        while(yCursor<=7)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            yCursor+=1;
+        }
+        //check left straight
+        xCursor = this.getX()-1;
+        yCursor = this.getY();
+        while (xCursor<=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor-=1;
+        }
+        //check bottom straight
+        xCursor = this.getX();
+        yCursor = this.getY()-1;
+        while (yCursor>=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            yCursor-=1;
+        }
+        //check right straight
+        xCursor = this.getX()+1;
+        yCursor = this.getY();
+        while(xCursor<=7)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor+=1;
+        }
+        return false;
+    }
 }
 
 
@@ -286,6 +472,10 @@ class Rook extends ChessPiece
         }
         return move_status.MOVE;
     }
+    @Override
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+        return false;
+    }
 }
 class Bishop extends ChessPiece
 {
@@ -306,7 +496,6 @@ class Bishop extends ChessPiece
         // Check if the move is diagonal/ valid in the first place, then check for collision results
         if( dx == dy)
         {
-            //TODO IMPLEMENT
             return collisionTracking(board, destination);
         }
 
@@ -356,6 +545,10 @@ class Bishop extends ChessPiece
         }
         return move_status.MOVE;
     }
+    @Override
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+        return false;
+    }
 }
 
 class Knight extends ChessPiece
@@ -383,6 +576,11 @@ class Knight extends ChessPiece
     @Override
     move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
         return move_status.MOVE;
+    }
+
+    @Override
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+        return false;
     }
 }
 class Pawn extends ChessPiece
@@ -437,7 +635,6 @@ class Pawn extends ChessPiece
         }
         System.out.println("failing pawn check??");
         return move_status.INVALID;
-        //TODO add diagonal take move for pawn
     }
     //special pawn method, since
     move_status captureCollisionTracking(ChessPiece[][] board, ChessCoordinate destination)
@@ -466,5 +663,10 @@ class Pawn extends ChessPiece
             return move_status.MOVE;
         }
         return move_status.INVALID;
+    }
+
+    @Override
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+        return false;
     }
 }
