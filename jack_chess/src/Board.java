@@ -78,9 +78,7 @@ public class Board {
             {
                 //piece was moved
                 process_Move_Capture(sourcePiece, source, destination);
-                //see if opposite color's king is in check
-                //TODO EVERY PIECE ON THE BOARD MUST RUN IT'S CHECK TEST
-                checkTest(!this.turnColor);
+
                 this.turnColor = !this.turnColor;
                 this.printBoard();
             }
@@ -125,35 +123,54 @@ public class Board {
         System.out.println("     ----- ----- ----- ----- ----- ----- ----- -----");
         System.out.println("       A     B     C     D     E     F     G     H");
     }
-    public void move_Piece(ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination)
-    {
+    public move_status move_Piece(ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination) throws Exception {
         //move like normal
+        ChessPiece destinationPiece = this.pieces[destination.getRawX()][destination.getRawY()];
         //set old spot to null
         this.pieces[source.getRawX()][source.getRawY()] = null;
         //set new spot to the piece
         this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
-        //swap turn color
+
+        //see if opposite color's king is in check
+        checkTest(!this.turnColor);
+        if(sourcePiece.getName().equals("King") && sourcePiece.getColor() == this.turnColor)
+        {
+            System.out.println("Can't Put Own Piece In Check!");
+            //player put themselves in check,
+            // UNDO THE TURN
+            this.pieces[source.getRawX()][source.getRawY()] = sourcePiece;
+            this.pieces[destination.getRawX()][destination.getRawY()] = destinationPiece;
+
+            // INVALIDATE MOVE
+            return move_status.INVALID;
+        }
         System.out.println("piece successfully moved");
+        return move_status.MOVE;
     }
-    public void process_Move_Capture(ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination)
-    {
+    public move_status process_Move_Capture(ChessPiece sourcePiece, ChessCoordinate source, ChessCoordinate destination) throws Exception {
         //if there is an enemy piece on the destination, remove it
         try
         {
             if(pieces[destination.getRawX()][destination.getRawY()].getColor() == this.turnColor)
             {
                 System.out.println("can't capture piece of same color");
+                return move_status.INVALID;
             }
             else
             {
                 move_Piece(sourcePiece, source, destination);
+                return move_status.MOVE;
             }
+
         }
         catch(NullPointerException e)
         {
             //capture has taken place
             //TODO ADD POINTS FEATURE WHEN CAPTURED
             move_Piece(sourcePiece, source, destination);
+            return move_status.CAPTURE;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

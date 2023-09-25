@@ -4,21 +4,13 @@ public class main {
         Board board = new Board();
         board.printBoard();
         //TEST GAMES
-        board.movePiece(new ChessCoordinate('F',2), new ChessCoordinate('F',4));
-        board.movePiece(new ChessCoordinate('G',7), new ChessCoordinate('G',6));
-        board.movePiece(new ChessCoordinate('G',1), new ChessCoordinate('H',3));
-        board.movePiece(new ChessCoordinate('G',6), new ChessCoordinate('G',5));
-        board.movePiece(new ChessCoordinate('H',3), new ChessCoordinate('G',5));
-        board.movePiece(new ChessCoordinate('H',7), new ChessCoordinate('H',6));
-        board.movePiece(new ChessCoordinate('G',5), new ChessCoordinate('F',7));
-        board.movePiece(new ChessCoordinate('H',8), new ChessCoordinate('H',7));
-        board.movePiece(new ChessCoordinate('F',7), new ChessCoordinate('E',5));
-        board.movePiece(new ChessCoordinate('E',7), new ChessCoordinate('E',6));
-        board.movePiece(new ChessCoordinate('F',4), new ChessCoordinate('F',5));
+        //PUT OWN PIECE IN CHECK
+        board.movePiece(new ChessCoordinate('E',2), new ChessCoordinate('E',4));
         board.movePiece(new ChessCoordinate('D',7), new ChessCoordinate('D',6));
-        board.movePiece(new ChessCoordinate('F',5), new ChessCoordinate('F',6));
-        board.movePiece(new ChessCoordinate('D',8), new ChessCoordinate('D',7));
-        board.movePiece(new ChessCoordinate('F',6), new ChessCoordinate('F',7));
+        board.movePiece(new ChessCoordinate('G',2), new ChessCoordinate('G',3));
+        board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',4));
+        board.movePiece(new ChessCoordinate('C',8), new ChessCoordinate('G',4));
+        board.movePiece(new ChessCoordinate('E',1), new ChessCoordinate('E',2));
         /*
 
         //BISHOP TRACKING
@@ -42,7 +34,22 @@ public class main {
         board.movePiece(new ChessCoordinate('C',4), new ChessCoordinate('C',6));
 
 
-
+        //PAWN CHECK TESTING
+        board.movePiece(new ChessCoordinate('F',2), new ChessCoordinate('F',4));
+        board.movePiece(new ChessCoordinate('G',7), new ChessCoordinate('G',6));
+        board.movePiece(new ChessCoordinate('G',1), new ChessCoordinate('H',3));
+        board.movePiece(new ChessCoordinate('G',6), new ChessCoordinate('G',5));
+        board.movePiece(new ChessCoordinate('H',3), new ChessCoordinate('G',5));
+        board.movePiece(new ChessCoordinate('H',7), new ChessCoordinate('H',6));
+        board.movePiece(new ChessCoordinate('G',5), new ChessCoordinate('F',7));
+        board.movePiece(new ChessCoordinate('H',8), new ChessCoordinate('H',7));
+        board.movePiece(new ChessCoordinate('F',7), new ChessCoordinate('E',5));
+        board.movePiece(new ChessCoordinate('E',7), new ChessCoordinate('E',6));
+        board.movePiece(new ChessCoordinate('F',4), new ChessCoordinate('F',5));
+        board.movePiece(new ChessCoordinate('D',7), new ChessCoordinate('D',6));
+        board.movePiece(new ChessCoordinate('F',5), new ChessCoordinate('F',6));
+        board.movePiece(new ChessCoordinate('D',8), new ChessCoordinate('D',7));
+        board.movePiece(new ChessCoordinate('F',6), new ChessCoordinate('F',7));
         //KNIGHT CHECK TESTING
         board.movePiece(new ChessCoordinate('B',1), new ChessCoordinate('C',3));
         board.movePiece(new ChessCoordinate('E',7), new ChessCoordinate('E',5));
