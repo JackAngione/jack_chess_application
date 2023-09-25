@@ -149,16 +149,20 @@ class Queen extends ChessPiece
     //collision tracking when queen is moving in rook style
     move_status rookStyleCollisionTracking(ChessPiece[][] board, ChessCoordinate destination)
     {
-        System.out.println("queeen rook type tracking");
-        int xCursor = Math.min(destination.getRawX(), this.getX());
-        int yCursor = Math.min(destination.getRawY(), this.getY());
+        //System.out.println("queen rook type tracking");
+        int xCursor = this.getX();
+        int yCursor = this.getY();
 
-        while(xCursor != Math.max(destination.getRawX(), this.getX()) || yCursor != Math.max(destination.getRawY(), this.getY()))
+
+        while(xCursor != destination.getRawX() || yCursor != destination.getRawY())
         {
-            if(board[xCursor][yCursor] != null
+            System.out.println("cursor is at: " + xCursor + ", " + yCursor);
+            System.out.println("destination is at: " + destination.getRawX() + ", " + destination.getRawY());
+            if(board[xCursor][yCursor] != null && board[xCursor][yCursor] != this
             && (xCursor != Math.min(destination.getRawX(), this.getX()) || yCursor != Math.min(destination.getRawY(), this.getY())))
             {
-                System.out.println("piece is at: " + xCursor + ", " + yCursor);
+
+                System.out.println("currentqueen: " + this.getX() + ", " + this.getY());
                 System.out.println("there is a piece in the way");
                 return move_status.INVALID;
             }
@@ -430,18 +434,23 @@ class Rook extends ChessPiece
         }
         return move_status.INVALID;
     }
-
     @Override
-    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination) {
-        int xCursor = Math.min(destination.getRawX(), this.getX());
-        int yCursor = Math.min(destination.getRawY(), this.getY());
+    move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination)
+    {
+        //System.out.println("queen rook type tracking");
+        int xCursor = this.getX();
+        int yCursor = this.getY();
 
-        while(xCursor != Math.max(destination.getRawX(), this.getX()) || yCursor != Math.max(destination.getRawY(), this.getY()))
+
+        while(xCursor != destination.getRawX() || yCursor != destination.getRawY())
         {
-            if(board[xCursor][yCursor] != null
+            System.out.println("cursor is at: " + xCursor + ", " + yCursor);
+            System.out.println("destination is at: " + destination.getRawX() + ", " + destination.getRawY());
+            if(board[xCursor][yCursor] != null && board[xCursor][yCursor] != this
                     && (xCursor != Math.min(destination.getRawX(), this.getX()) || yCursor != Math.min(destination.getRawY(), this.getY())))
             {
-                System.out.println("piece is at: " + xCursor + ", " + yCursor);
+
+                System.out.println("currentqueen: " + this.getX() + ", " + this.getY());
                 System.out.println("there is a piece in the way");
                 return move_status.INVALID;
             }
@@ -471,6 +480,7 @@ class Rook extends ChessPiece
                     xCursor -= 1;
                 }
             }
+
         }
         return move_status.MOVE;
     }
@@ -698,7 +708,7 @@ class Bishop extends ChessPiece
         //check bottom right diagonal
         xCursor = this.getX()+1;
         yCursor = this.getY()-1;
-        while (xCursor>=0 && yCursor>=0)
+        while (xCursor<=7 && yCursor>=0)
         {
             if(board[xCursor][yCursor] != null)
             {
@@ -867,8 +877,6 @@ class Pawn extends ChessPiece
         return move_status.INVALID;
     }
 
-
-
     //special pawn method, since
     move_status captureCollisionTracking(ChessPiece[][] board, ChessCoordinate destination)
     {
@@ -899,6 +907,29 @@ class Pawn extends ChessPiece
     }
     @Override
     boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) throws Exception {
+        int targetY = 1;
+        if(!this.getColor())
+        {
+            //if black, move target y two down to look at piece below
+            targetY = -2;
+        }
+        try{
+            ChessPiece leftTarget = board[this.getX()-1][this.getY()+targetY];
+            if(leftTarget.getName().equals("King") && leftTarget.getColor() != this.getColor())
+            {
+                return true;
+            }
+        }
+        catch (Exception ignored){}
+        try
+        {
+            ChessPiece rightTarget = board[this.getX()+1][this.getY()+targetY];
+            if(rightTarget.getName().equals("King") && rightTarget.getColor() != this.getColor())
+            {
+                return true;
+            }
+        }
+        catch (Exception ignored) {}
         return false;
     }
 

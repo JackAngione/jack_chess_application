@@ -185,7 +185,7 @@ public class Board {
 
     public boolean checkTest(boolean kingColor) throws Exception {
         ChessCoordinate kingCoordinates = getKingCoord(kingColor);
-        Boolean inCheck = false;
+        boolean inCheck = false;
         //loops throughout the board. if the piece is of the current turn color, it runs that pieces
         //check function to see if it is putting the enemy king in check
         for(int i = 0; i<=7; i++)
@@ -205,5 +205,4 @@ public class Board {
         }
         return false;
     }
-
 }

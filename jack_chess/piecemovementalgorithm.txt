@@ -3,3 +3,8 @@ fail move if there is a piece in the path
 
 if there is a piece on the destination, a piece is captured
 
+
+9-25 notes
+When checking if king is in check after a move.
+do a check that sees if you moved that king and it's putting itself in check.
+if so, cancel move

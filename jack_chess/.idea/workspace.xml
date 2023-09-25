@@ -8,16 +8,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Bishop.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Bishop.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/ChessCoordinate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/ChessCoordinate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/ChessPiece.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/ChessPiece.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/jack_chess/King.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/King.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Knight.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Knight.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Pawn.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Pawn.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Queen.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Queen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/Rook.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/Rook.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/jack_chess/main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/jack_chess/main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/piecemovementalgorithm.txt" beforeDir="false" afterPath="$PROJECT_DIR$/piecemovementalgorithm.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChessCoordinate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessCoordinate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChessPiece.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessPiece.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.java" afterDir="false" />
     </list>
@@ -131,7 +128,7 @@
       <workItem from="1694730675674" duration="1355000" />
       <workItem from="1695068760699" duration="14307000" />
       <workItem from="1695530645137" duration="659000" />
-      <workItem from="1695668455192" duration="1169000" />
+      <workItem from="1695668455192" duration="4888000" />
     </task>
     <servers />
   </component>
