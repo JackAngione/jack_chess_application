@@ -65,9 +65,9 @@ public class Board {
        //TODO MAKE SURE COORDINATES ARE VALID
 
         ChessPiece sourcePiece = this.pieces[source.getRawX()][source.getRawY()];
-        System.out.println("source piece name: " + sourcePiece.getColorString());
-        System.out.println("source piece location: (" + source.getX()+", " + source.getY() + ")");
-        System.out.println("Destination location: (" + destination.getX()+", " + (destination.getY()) + ")");
+        //System.out.println("source piece name: " + sourcePiece.getColorString());
+        //System.out.println("source piece location: (" + source.getX()+", " + source.getY() + ")");
+        //System.out.println("Destination location: (" + destination.getX()+", " + (destination.getY()) + ")");
         //quit if attempting to capture enemy piece
 
         //if piece at source is of proper color
@@ -80,7 +80,7 @@ public class Board {
                 process_Move_Capture(sourcePiece, source, destination);
                 //see if opposite color's king is in check
                 //TODO EVERY PIECE ON THE BOARD MUST RUN IT'S CHECK TEST
-                checkTest(!this.turnColor, sourcePiece);
+                checkTest(!this.turnColor);
                 this.turnColor = !this.turnColor;
                 this.printBoard();
             }
@@ -183,14 +183,27 @@ public class Board {
         return kingPosition;
     }
 
-    public void checkTest(boolean kingColor, ChessPiece last_moved_piece) throws Exception {
+    public boolean checkTest(boolean kingColor) throws Exception {
         ChessCoordinate kingCoordinates = getKingCoord(kingColor);
-        //TODO run the piece's check pattern to see if it puts the enemy king in check
-        Boolean inCheck = last_moved_piece.king_check(this.pieces, kingCoordinates);
-        if(inCheck)
+        Boolean inCheck = false;
+        //loops throughout the board. if the piece is of the current turn color, it runs that pieces
+        //check function to see if it is putting the enemy king in check
+        for(int i = 0; i<=7; i++)
         {
-            System.out.println("KING IS IN CHECK!!!!");
+            for(int j = 0; j<=7; j++)
+            {
+                if(this.pieces[i][j] != null && this.pieces[i][j].getColor() == this.turnColor)
+                {
+                    inCheck = this.pieces[i][j].king_check(this.pieces, kingCoordinates);
+                }
+                if(inCheck)
+                {
+                    System.out.println("KING IS IN CHECK!!!!");
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
 }

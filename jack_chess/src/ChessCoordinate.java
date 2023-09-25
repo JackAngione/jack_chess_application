@@ -29,13 +29,13 @@ public class ChessCoordinate {
             coordinateLetters.put('f', 5);
             coordinateLetters.put('g', 6);
             coordinateLetters.put('h', 7);
-            //set x1 to 'A' as a backup
+            //set x1 to 'Z' as a backup
             x1 = 'Z';
             //loop through hashmap and assign x to the letter which has it's numeric value
             for (Map.Entry<Character, Integer> entry : coordinateLetters.entrySet()) {
                 Character key = entry.getKey();
                 Integer value = entry.getValue();
-                System.out.println("Key: " + key + ", Value: " + value);
+                //System.out.println("Key: " + key + ", Value: " + value);
                 if(value == x)
                 {
                     x1 = key;
@@ -47,7 +47,14 @@ public class ChessCoordinate {
              throw new Exception("Incorrect X coordinate given to ChessCoordinate object");
             }
             this.x = x1;
-            this.y = y+1;
+            if(y>7||y<0)
+            {
+                throw new Exception("Y value out of bounds");
+            }
+            else {
+                this.y = y+1;
+            }
+
         }
         public char getX()
         {

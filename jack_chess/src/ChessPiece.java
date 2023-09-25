@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class ChessPiece {
     private final boolean color;
     private int pos_x;
@@ -60,7 +62,7 @@ public abstract class ChessPiece {
     abstract move_status isValidMove(ChessPiece[][] board, ChessCoordinate destination);
 
     //see if next move puts king in check
-    abstract boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates);
+    abstract boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) throws Exception;
     abstract move_status collisionTracking(ChessPiece[][] board, ChessCoordinate destination);
     //TODO possibly make a getter for position
 }
@@ -305,7 +307,7 @@ class Queen extends ChessPiece
         //check bottom right diagonal
         xCursor = this.getX()+1;
         yCursor = this.getY()-1;
-        while (xCursor>=0 && yCursor>=0)
+        while (xCursor<=7 && yCursor>=0)
         {
             if(board[xCursor][yCursor] != null)
             {
@@ -474,6 +476,87 @@ class Rook extends ChessPiece
     }
     @Override
     boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+        //check top straight
+        int xCursor = this.getX();
+        int yCursor = this.getY()+1;
+        ChessPiece targetPiece;
+        while(yCursor<=7)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                    targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            yCursor+=1;
+        }
+        //check left straight
+        xCursor = this.getX()-1;
+        yCursor = this.getY();
+        while (xCursor>=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor-=1;
+        }
+        //check bottom straight
+        xCursor = this.getX();
+        yCursor = this.getY()-1;
+        while (yCursor>=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            yCursor-=1;
+        }
+        //check right straight
+        xCursor = this.getX()+1;
+        yCursor = this.getY();
+        while(xCursor<=7)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor+=1;
+        }
         return false;
     }
 }
@@ -547,6 +630,92 @@ class Bishop extends ChessPiece
     }
     @Override
     boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+        int xCursor = this.getX()-1;
+        int yCursor = this.getY()+1;
+        ChessPiece targetPiece;
+        //check from piece to top left diagonal
+        while (xCursor>=0 && yCursor<=7)
+        {
+
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor-=1;
+            yCursor+=1;
+        }
+        //check top right diagonal
+        xCursor = this.getX()+1;
+        yCursor = this.getY()+1;
+        while (xCursor<=7 && yCursor<=7)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor+=1;
+            yCursor+=1;
+        }
+        //check bottom left diagonal
+        xCursor = this.getX()-1;
+        yCursor = this.getY()-1;
+        while (xCursor>=0 && yCursor>=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor-=1;
+            yCursor-=1;
+        }
+        //check bottom right diagonal
+        xCursor = this.getX()+1;
+        yCursor = this.getY()-1;
+        while (xCursor>=0 && yCursor>=0)
+        {
+            if(board[xCursor][yCursor] != null)
+            {
+                targetPiece = board[xCursor][yCursor];
+                if(targetPiece.getName().equals("King") && targetPiece.getColor() != this.getColor())
+                {
+                    return true;
+                }
+                else
+                {
+                    //hit a non-enemy-king piece
+                    break;
+                }
+            }
+            xCursor+=1;
+            yCursor-=1;
+        }
         return false;
     }
 }
@@ -579,7 +748,68 @@ class Knight extends ChessPiece
     }
 
     @Override
-    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) throws Exception {
+        ArrayList<ChessCoordinate> next_possible_moves = new ArrayList<>();
+        try{
+            next_possible_moves.add(new ChessCoordinate(this.getX()-1, this.getY()+2));
+
+        } catch (Exception e) {
+            //System.out.println("cant add that knight position1");
+        }
+
+        try{
+            next_possible_moves.add(new ChessCoordinate(this.getX()+1, this.getY()+2));
+        } catch (Exception e) {
+            //System.out.println("cant add that knight position");
+        }
+
+        try{
+            next_possible_moves.add(new ChessCoordinate(this.getX()+2, this.getY()+1));
+
+        } catch (Exception e) {
+            //System.out.println("cant add that knight position");
+        }
+
+        try{
+            next_possible_moves.add(new ChessCoordinate(this.getX()+2, this.getY()-1));
+        } catch (Exception e) {
+            //System.out.println("cant add that knight position");
+        }
+        try
+        {
+            next_possible_moves.add(new ChessCoordinate(this.getX()-1, this.getY()-2));
+
+        } catch (Exception e) {
+            //System.out.println("cant add that knight position");
+        }
+
+        try
+        {
+            next_possible_moves.add(new ChessCoordinate(this.getX()+1, this.getY()-2));
+        } catch (Exception e) {
+
+        }
+        try
+        {
+            next_possible_moves.add(new ChessCoordinate(this.getX()-2, this.getY()+1));
+        } catch (Exception e) {
+
+        }
+
+        try
+        {
+            next_possible_moves.add(new ChessCoordinate(this.getX()-2, this.getY()-1));
+        } catch (Exception e) {
+
+        }
+
+        for(ChessCoordinate nextPossibleMove : next_possible_moves) {
+            ChessPiece targetSpot = board[nextPossibleMove.getRawX()][nextPossibleMove.getRawY()];
+
+            if (targetSpot != null && targetSpot.getName().equals("King") && targetSpot.getColor() != this.getColor()) {
+                return true;
+            }
+        }
         return false;
     }
 }
@@ -636,6 +866,9 @@ class Pawn extends ChessPiece
         System.out.println("failing pawn check??");
         return move_status.INVALID;
     }
+
+
+
     //special pawn method, since
     move_status captureCollisionTracking(ChessPiece[][] board, ChessCoordinate destination)
     {
@@ -664,9 +897,9 @@ class Pawn extends ChessPiece
         }
         return move_status.INVALID;
     }
-
     @Override
-    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) {
+    boolean king_check(ChessPiece[][] board, ChessCoordinate kingCoordinates) throws Exception {
         return false;
     }
+
 }
