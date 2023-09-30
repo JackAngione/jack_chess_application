@@ -1,8 +1,35 @@
+import java.util.Scanner;
 
 public class main {
     public static void main(String[] args) throws Exception {
         Board board = new Board();
         board.printBoard();
+
+        System.out.println("Instructions: Enter the source of the piece you want to move, and it's destination separated by a space");
+        System.out.println("Example: A2 B3");
+        Scanner user_input = new Scanner(System.in);
+        int move_counter = 1;
+        //TODO MAKE LOOP STOP WHEN CHESS BOARD IS OVER
+        while(move_counter<200)
+        {
+            System.out.print("Move " + move_counter + ": ");
+            String next_move = user_input.nextLine();
+            try
+            {
+                String[] src_dst = next_move.split(" ");
+                String[] source_coord = src_dst[0].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                String[] destination_coord = src_dst[1].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                
+                board.movePiece(new ChessCoordinate(source_coord[0].toCharArray()[0], Integer.parseInt(source_coord[1])),
+                        new ChessCoordinate(destination_coord[0].toCharArray()[0], Integer.parseInt(destination_coord[1])));
+                move_counter++;
+            }
+            catch (Exception invalidInput)
+            {
+                System.out.println("Invalid Move, try again");
+            }
+        }
+
         //TEST GAMES
         //PUT OWN PIECE IN CHECK
         board.movePiece(new ChessCoordinate('E',2), new ChessCoordinate('E',4));
