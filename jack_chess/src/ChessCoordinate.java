@@ -6,6 +6,7 @@ public class ChessCoordinate {
         private final int y;
 
         HashMap<Character, Integer> coordinateLetters = new HashMap<>();
+        //create new coordinate using display values
         public ChessCoordinate(char x, int y)
         {
             this.x = x;
@@ -19,6 +20,7 @@ public class ChessCoordinate {
             coordinateLetters.put('g', 6);
             coordinateLetters.put('h', 7);
         }
+        //create new coordinate USING RAW VALUES
         public ChessCoordinate(int x, int y) throws Exception {
             char x1;
             coordinateLetters.put('a', 0);

@@ -132,7 +132,7 @@ public class Board {
         this.pieces[destination.getRawX()][destination.getRawY()] = sourcePiece;
 
         //see if opposite color's king is in check
-        checkTest(!this.turnColor);
+        checkTest(this.pieces, !this.turnColor);
         if(sourcePiece.getName().equals("King") && sourcePiece.getColor() == this.turnColor)
         {
             System.out.println("Can't Put Own Piece In Check!");
@@ -200,7 +200,7 @@ public class Board {
         return kingPosition;
     }
 
-    public boolean checkTest(boolean kingColor) throws Exception {
+    public boolean checkTest(ChessPiece[][] board,  boolean kingColor) throws Exception {
         ChessCoordinate kingCoordinates = getKingCoord(kingColor);
         boolean inCheck = false;
         //loops throughout the board. if the piece is of the current turn color, it runs that pieces
@@ -216,10 +216,155 @@ public class Board {
                 if(inCheck)
                 {
                     System.out.println("KING IS IN CHECK!!!!");
+                    //TODO CHECKMATE TEST
+                    checkMate(this.pieces, kingCoordinates, kingColor);
+                    //TODO refactor to end game when checkmate hits
                     return true;
                 }
             }
         }
         return false;
     }
+    public boolean checkMate(ChessPiece[][] board, ChessCoordinate kingCoordinates, boolean kingColor) throws Exception {
+        //make a temp board to simulate next king move
+        ChessPiece[][] sim_Board = board;
+        ChessPiece king_piece = sim_Board[kingCoordinates.getRawX()][kingCoordinates.getRawY()];
+        //put king in all possible next positions
+        //up
+        try
+        {
+            sim_Board[kingCoordinates.getRawX()][kingCoordinates.getRawY()+1] = king_piece;
+        }catch (ArrayIndexOutOfBoundsException e)
+        {
+           // System.err.println("Error setting top right: " + e.getMessage());
+        }
+
+        //top right
+        try {
+            sim_Board[kingCoordinates.getRawX()+1][kingCoordinates.getRawY()+1] = king_piece;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.err.println("Error setting top right: " + e.getMessage());
+        }
+
+        //right
+        try {
+            sim_Board[kingCoordinates.getRawX()+1][kingCoordinates.getRawY()] = king_piece;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.err.println("Error setting right: " + e.getMessage());
+        }
+
+        //bottom right
+        try {
+            sim_Board[kingCoordinates.getRawX()+1][kingCoordinates.getRawY()-1] = king_piece;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.err.println("Error setting bottom right: " + e.getMessage());
+        }
+
+        //bottom
+        try {
+            sim_Board[kingCoordinates.getRawX()][kingCoordinates.getRawY()-1] = king_piece;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.err.println("Error setting bottom: " + e.getMessage());
+        }
+
+        //bottom left
+        try {
+            sim_Board[kingCoordinates.getRawX()-1][kingCoordinates.getRawY()-1] = king_piece;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.err.println("Error setting bottom left: " + e.getMessage());
+        }
+
+        //left
+        try {
+            sim_Board[kingCoordinates.getRawX()-1][kingCoordinates.getRawY()] = king_piece;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.err.println("Error setting left: " + e.getMessage());
+        }
+
+        //top left
+        try {
+            sim_Board[kingCoordinates.getRawX()-1][kingCoordinates.getRawY()+1] = king_piece;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            //System.err.println("Error setting top left: " + e.getMessage());
+        }
+
+
+        for(int i = 0; i<=7; i++)
+        {
+            for(int j = 0; j<=7; j++)
+            {
+                boolean inCheck = false;
+                if(sim_Board[i][j] != null && sim_Board[i][j].getColor() == this.turnColor)
+                {
+                    boolean condition1 = false;
+                    try {
+                        condition1 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX(), kingCoordinates.getRawY()+1));
+                    } catch (Exception e) {
+                        //System.err.println("Error checking condition1: " + e.getMessage());
+                    }
+
+                    boolean condition2 = false;
+                    try {
+                        condition2 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX()+1, kingCoordinates.getRawY()+1));
+                    } catch (Exception e) {
+                        //System.err.println("Error checking condition2: " + e.getMessage());
+                    }
+
+                    boolean condition3 = false;
+                    try {
+                        condition3 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX()+1, kingCoordinates.getRawY()));
+                    } catch (Exception e) {
+                        //System.err.println("Error checking condition3: " + e.getMessage());
+                    }
+
+                    boolean condition4 = false;
+                    try {
+                        condition4 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX()+1, kingCoordinates.getRawY()-1));
+                    } catch (Exception e) {
+                        //System.err.println("Error checking condition4: " + e.getMessage());
+                    }
+
+                    boolean condition5 = false;
+                    try {
+                        condition5 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX(), kingCoordinates.getRawY()-1));
+                    } catch (Exception e) {
+                       //System.err.println("Error checking condition5: " + e.getMessage());
+                    }
+
+                    boolean condition6 = false;
+                    try {
+                        condition6 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX()-1, kingCoordinates.getRawY()-1));
+                    } catch (Exception e) {
+                        //System.err.println("Error checking condition6: " + e.getMessage());
+                    }
+
+                    boolean condition7 = false;
+                    try {
+                        condition7 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX()-1, kingCoordinates.getRawY()));
+                    } catch (Exception e) {
+                        //System.err.println("Error checking condition7: " + e.getMessage());
+                    }
+
+                    boolean condition8 = false;
+                    try {
+                        condition8 = sim_Board[i][j].king_check(sim_Board, new ChessCoordinate(kingCoordinates.getRawX()-1, kingCoordinates.getRawY()+1));
+                    } catch (Exception e) {
+                        //System.err.println("Error checking condition8: " + e.getMessage());
+                    }
+
+
+                    inCheck = condition1 || condition2 || condition3 || condition4 || condition5 || condition6 || condition7 || condition8;
+                }
+                if(inCheck)
+                {
+                    System.out.println("KING IS IN CHECK MATE!!!!");
+                    //TODO refactor to end game when checkmate hits
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+
 }

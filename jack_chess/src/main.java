@@ -4,7 +4,7 @@ public class main {
     public static void main(String[] args) throws Exception {
         Board board = new Board();
         board.printBoard();
-
+        /*
         System.out.println("Instructions: Enter the source of the piece you want to move, and it's destination separated by a space");
         System.out.println("Example: A2 B3");
         Scanner user_input = new Scanner(System.in);
@@ -19,7 +19,7 @@ public class main {
                 String[] src_dst = next_move.split(" ");
                 String[] source_coord = src_dst[0].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
                 String[] destination_coord = src_dst[1].split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                
+
                 board.movePiece(new ChessCoordinate(source_coord[0].toCharArray()[0], Integer.parseInt(source_coord[1])),
                         new ChessCoordinate(destination_coord[0].toCharArray()[0], Integer.parseInt(destination_coord[1])));
                 move_counter++;
@@ -30,7 +30,20 @@ public class main {
             }
         }
 
+         */
+
         //TEST GAMES
+        //CHECKMATE TESTING
+        board.movePiece(new ChessCoordinate('E',2), new ChessCoordinate('E',4));
+        board.movePiece(new ChessCoordinate('D',7), new ChessCoordinate('D',5));
+        board.movePiece(new ChessCoordinate('D',1), new ChessCoordinate('H',5));
+        board.movePiece(new ChessCoordinate('C',7), new ChessCoordinate('C',5));
+        board.movePiece(new ChessCoordinate('F',1), new ChessCoordinate('C',4));
+        board.movePiece(new ChessCoordinate('D',5), new ChessCoordinate('D',4));
+        board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',3));
+        board.movePiece(new ChessCoordinate('C',8), new ChessCoordinate('D',7));
+        board.movePiece(new ChessCoordinate('H',5), new ChessCoordinate('F',7));
+        /*
         //PUT OWN PIECE IN CHECK
         board.movePiece(new ChessCoordinate('E',2), new ChessCoordinate('E',4));
         board.movePiece(new ChessCoordinate('D',7), new ChessCoordinate('D',6));
@@ -38,8 +51,6 @@ public class main {
         board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',4));
         board.movePiece(new ChessCoordinate('C',8), new ChessCoordinate('G',4));
         board.movePiece(new ChessCoordinate('E',1), new ChessCoordinate('E',2));
-        /*
-
         //BISHOP TRACKING
         board.movePiece(new ChessCoordinate('D',2), new ChessCoordinate('D',4));
 
